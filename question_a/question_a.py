@@ -5,15 +5,16 @@ import re
 
 
 def collide(line1, line2):
-    return True
+    if (line1[0] in line2 or line1[1] in line2):
+        return True
+    return False
 
 
 
 def cli_match(user_input):
     pattern = re.compile(r'\s*\(?([+-]?\d+)[,\s]\s*([+-]?\d+)\)?[,\s]\s*\s*\(?([+-]?\d+)[,\s]\s*([+-]?\d+)\)?\s*')
-    print(pattern)
     m = pattern.match(user_input)
-    return (m.group(1),m.group(2)), (m.group(3),m.group(4))
+    return (int(m.group(1)),int(m.group(2))), (int(m.group(3)),int(m.group(4)))
 
 
 if __name__ == '__main__':
