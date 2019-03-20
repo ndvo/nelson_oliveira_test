@@ -3,18 +3,26 @@
 import re
 
 
-
 def collide(line1, line2):
-    if (line1[0] in line2 or line1[1] in line2):
+    """ Return true if the two lines overlap and false otherwise."""
+    line1 = min(line1), max(line1)
+    line2 = min(line2), max(line2)
+    if line2[0] <= line1[0] <= line2[1]:
+        return True
+    if line2[0] <= line1[1] <= line2[1]:
+        return True
+    if line1[0] <= line2[0] <= line1[1]:
+        return True
+    if line1[0] <= line2[1] <= line1[1]:
         return True
     return False
 
 
-
 def cli_match(user_input):
-    pattern = re.compile(r'\s*\(?([+-]?\d+)[,\s]\s*([+-]?\d+)\)?[,\s]\s*\s*\(?([+-]?\d+)[,\s]\s*([+-]?\d+)\)?\s*')
+    """ convert user input in a tuple of integers"""
+    pattern = re.compile(r'\s*\(?([+-]?\d+)[,\s]\s*([+-]?\d+)\)?\s*')
     m = pattern.match(user_input)
-    return (int(m.group(1)),int(m.group(2))), (int(m.group(3)),int(m.group(4)))
+    return (int(m.group(1)),int(m.group(2)))
 
 
 if __name__ == '__main__':
