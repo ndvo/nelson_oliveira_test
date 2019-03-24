@@ -12,11 +12,14 @@ class Test(unittest.TestCase):
         self.assertEqual(question_b.compare_a2b_human_friendly("8.1.9", "0.1.9"), "8.1.9 is greater than 0.1.9", "Major versions integer" )
         self.assertEqual(question_b.compare_a2b_human_friendly("8.0.9", "8.1.9"), "8.0.9 is less than 8.1.9", "Minor versions integer" )
         self.assertEqual(question_b.compare_a2b_human_friendly("8.1.8", "8.1.9"), "8.1.8 is less than 8.1.9", "Patch versions integer" )
+        self.assertEqual(question_b.compare_a2b_human_friendly("8.0.9", "version8.1.9"), "8.0.9 is less than version8.1.9", "Minor versions integer" )
+        self.assertEqual(question_b.compare_a2b_human_friendly("v8.1.9", "0.1.9"), "v8.1.9 is greater than 0.1.9", "Major versions integer" )
+        self.assertEqual(question_b.compare_a2b_human_friendly("version8.1.8", "v8.1.9"), "version8.1.8 is less than v8.1.9", "Patch versions integer" )
 
     def test_simple_incomplete_semantic_versioning(self):
         self.assertEqual(question_b.compare_a2b_human_friendly("8", "0.1.9"), "8 is greater than 0.1.9", "Major versions integer" )
         self.assertEqual(question_b.compare_a2b_human_friendly("8.0", "8.1.9"), "8.0 is less than 8.1.9", "Minor versions integer" )
-        self.assertEqual(question_b.compare_a2b_human_friendly("8.1091.8827", "8.11"), "8.1091.8827 is less than 8.11", "Patch versions integer" )
+        self.assertEqual(question_b.compare_a2b_human_friendly("8.1091.8827", "8.11"), "8.1091.8827 is greater than 8.11", "Patch versions integer" )
         
     def test_alphanumeric_semantic_versioning(self):
         self.assertEqual(question_b.compare_a2b_human_friendly("8a.1.9", "8.1.9"), "8a.1.9 is greater than 8.1.9", "Major plus letter" )
@@ -30,9 +33,8 @@ class Test(unittest.TestCase):
 
     def test_named_semantic_versioning(self):
         self.assertEqual(question_b.compare_a2b_human_friendly("8.1-RC1", "8.1-RC"), "8.1-RC1 is greater than 8.1-RC", "Major plus letter" )
+        self.assertEqual(question_b.compare_a2b_human_friendly("8.1-Release Candidate", "8.1-RC"), "8.1-Release Candidate is equal to 8.1-RC", "Major plus letter" )
         self.assertEqual(question_b.compare_a2b_human_friendly("8.1-BETA", "8.1-RC"), "8.1-BETA is less than 8.1-RC", "Major plus letter" )
-        self.assertEqual(question_b.compare_a2b_human_friendly("8.1-RELEASE", "8.1-RC"), "8.1-RELEASE is greater than 8.1-RC", "Major plus letter" )
-        self.assertEqual(question_b.compare_a2b_human_friendly("8.1-RELEASE", "8.1-RC"), "8.1-RELEASE is greater than 8.1-RC", "Major plus letter" )
 
 
 
